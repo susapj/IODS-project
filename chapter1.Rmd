@@ -1,6 +1,6 @@
 # About the project
 
-This is a open data science course where we will learn how to do different data analysis techniques using R and GitHub
+This is a open data science course where we will learn how to do different data analysis techniques using R and GitHub. This is a test
 
 ### Link to my repository 
 
