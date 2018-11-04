@@ -1,7 +1,9 @@
 # Learnig to use GitHub
 
-*Describe the work you have done this week and summarize your learning.*
+*Description of this week's work*
 
-- Describe your work and results clearly. 
-- Assume the reader has an introductory course level understanding of writing and reading R code as well as statistical methods
-- Assume the reader has no previous knowledge of your data or the more advanced methods you are using  
+This week has been the starting week of the course. I started by creating a Github account and creating my own course page by forking the course page from the instructor. Unfortunately, I have not yet managed to link my Github desktop software with the web version. The protection of my computer is quite heavy, so I assume that might be the reason.
+
+I have used R and RStudio before but the R Markdown document of new to me. By using R Markdown
+
+I also did the course "R short and sweet" in the Datacamp. Even though I have bee using R before, I thought it's probably good to go through all the exercises, as there might be some new functions used. And it was definitely useful: at least functions 
