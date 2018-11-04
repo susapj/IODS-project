@@ -2,10 +2,7 @@
 
 This is a open data science course where we will learn how to use open data software to analyze open data. We will use different data analysis and visualisation techniques and practice "reproducable" research.
 
-The software we are using are:
-* R 
-+ Including R Markdown
-*GitHub
+The software we are using are: R (including R Markdown) and GitHub
 
 ### Link to my repository 
 
