@@ -1,6 +1,11 @@
 # About the project
 
-This is a open data science course where we will learn how to do different data analysis techniques using R and GitHub. This is a test
+This is a open data science course where we will learn how to use open data software to analyze open data. We will use different data analysis and visualisation techniques and practice "reproducable" research.
+
+The software we are using are:
+* R 
++ Including R Markdown
+*GitHub
 
 ### Link to my repository 
 
