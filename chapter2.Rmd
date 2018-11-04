@@ -2,7 +2,7 @@
 
 *Description of this week's work*
 
-This week has been the starting week of the course. I started by creating a Github account and creating my own course page by forking the course page from the instructor. I also downloaded the GitHub desktop and finally managed to clone my web repository to the desktop version. After that, I realized that it is actually quite handy, because you can use RStudio to modify the documnets and then you just need to go the GitHub desktop and first commit the changed and then push them to the web version. You can have a web diary of our work and notes and you can access it with every computer.
+This week has been the starting week of the course. I started by creating a Github account and creating my own course page by forking the course page from the instructor. I also downloaded the GitHub desktop and finally managed to clone my web repository to the desktop version. After that, I realized that it is actually quite easy to use because you can use RStudio to modify the documnets and then you just need to go the GitHub desktop and first commit the changes and then push them to the web version. You can have a web diary of our work and notes and you can access it with every computer.
 
 I have used R and RStudio before but the R Markdown document is new to me. R Markdown enables to create reports of your work so that you do not need to copy-paste for example figures to your report but you can embbed the plot code to your document and create the report right away. I guess this is extremly handy if one needs to repeat some reporting often.
 
