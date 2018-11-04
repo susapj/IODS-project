@@ -1,0 +1,7 @@
+---
+output: github_document
+---
+
+This is a open data science course
+
+Link to my diary: <https://susapj.github.io/IODS-project/>.
