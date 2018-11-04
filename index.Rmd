@@ -3,7 +3,7 @@ title: "IODS course project"
 author: "Susanna Jernberg"
 output:
   html_document:
-    theme: default
+    theme: sandstone
     toc: true
     toc_depth: 2
     fig_caption: true
