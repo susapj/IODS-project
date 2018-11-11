@@ -1,9 +1,31 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Learnig to use GitHub and R Markdown
 
 *Description of this week's work*
 
-This week has been the starting week of the course. I started by creating a Github account and creating my own course page by forking the course page from the instructor. I also downloaded the GitHub desktop and finally managed to clone my web repository to the desktop version. After that, I realized that it is actually quite easy to use because you can use RStudio to modify the documnets and then you just need to go the GitHub desktop and first commit the changes and then push them to the web version. You can have a web diary of our work and notes and you can access it with every computer.
+Read data in
 
-I have used R and RStudio before but the R Markdown document is new to me. R Markdown enables to create reports of your work so that you do not need to copy-paste for example figures to your report but you can embbed the plot code to your document and create the report right away. I guess this is extremly handy if one needs to repeat some reporting often.
+```{r, include=FALSE}
+learning_data<-read.csv(file="D:/Users/E1002220/Opinnot/Data science/IODS-project/data/learning2014_data.csv", sep="\t")
+str(learning_data)
+```
 
-I also did the course "R short and sweet" in the Datacamp. Even though I have bee using R before, I thought it is probably good to go through all the exercises, as there might be some new functions used. And it was definitely useful: I have not been using for example funcion "cut" that cuts the vector into chosen categories, or the function "head" that prints the first six values. 
+```{r}
+str(learning_data)
+dim(learning_data)
+```
+
+```{r, include=FALSE}
+library(dplyr)
+library(GGally)
+p<-ggpairs(learning_data, mapping = aes(col=gender, aplha= 0.3), lower=list(combo=wrap("facethist", bins=20)))
+p
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
