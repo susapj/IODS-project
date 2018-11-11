@@ -1,30 +1,56 @@
 ---
+title: Regression and model validation
+author: Susanna Jernberg
 output:
-  pdf_document: default
   html_document: default
 ---
-# Learnig to use GitHub and R Markdown
+### Overview of the data
 
-*Description of this week's work*
-
-Read data in
+The data constitutes of 7 variables that are gender (factor), age (integer), attitude (integer) that describes, attitude toward statistics, deep (numeric) describing exam questions related to deep learning, stra (numeric) describing questions related to strategic learning and surf (numeric) describing questions related to surface learning and Points (integer) that refers to exam points.
 
 ```{r, include=FALSE}
 learning_data<-read.csv(file="D:/Users/E1002220/Opinnot/Data science/IODS-project/data/learning2014_data.csv", sep="\t")
-str(learning_data)
+library(dplyr)
+library(GGally)
 ```
 
-```{r}
+```{r, echo=FALSE}
 str(learning_data)
 dim(learning_data)
 ```
 
-```{r, include=FALSE}
-library(dplyr)
-library(GGally)
-p<-ggpairs(learning_data, mapping = aes(col=gender, aplha= 0.3), lower=list(combo=wrap("facethist", bins=20)))
+Below are the summary plots of the data. There are some difference between the male and female students, for instance there seems to be a small difference in the attitude between the genders, male studens having a bit higher attitude than females. This can be seen both in the boxplots and their means and the overal distribution of the responses.
+
+```{r, echo=FALSE}
+p<-ggpairs(learning_data, mapping = aes(col=gender, alpha= 0.3), lower=list(combo=wrap("facethist", bins=20)))
 p
+summary(learning_data)
 ```
+
+### Fitting the linear regression to the data and relationship between the variables.
+Here the aim is to find variables that are explaining best the variable Points. Based on the summary plots, attitude, strategic learning and surface learning seem to be the variables with highest correlation with the points. So these will first be used in building the model. 
+
+```{r, echo=FALSE}
+my_model<-lm(Points ~ Attitude + stra + surf, data=learning_data)
+summary(my_model)
+```
+The model summary above shows, that attitude clearly explains the exam points (p=0) but in this model, strategic and surface learning seem not be explaining it. However, it is worth trying to adjust the model so, that both of these variables are included in the model only with attitude. The result is that surface learning has no explanatory power but strategic learning (p<0.05) actually has. The summary of the final model is shown below.The summary shows that the overall explanatory power of the model is around 21 % which can be seen from the multiple R squared (0.2048). 
+```{r, echo=FALSE}
+my_model<-lm(Points ~ Attitude + stra, data=learning_data)
+summary(my_model)
+```
+
+### Diagnostic plots and model validation
+
+There are always assumption about the data when certain model is being used. In linear regreassion model, the assumpiton are for instance, that the errors have a normal distribution, they are not correlated, have a constant variance and the size of the erros is not dependent on the explanatory variables. The plots below allow us to explore these assumptions. The plot with residuals vs. fitted values tells if the variance is constant. This is true for this model because there is no pattern in the points and they are quite randomly distributed in the figure. QQ plot shows if the errors are normally distirbuted. In this case they are because the points in the plot follow the line in the middle quite well. Only in the beginning of the line, one could say that there is something weird in the distribution. The plot with standardized residuals vs. levarage shows the impact of a single observation on the model. In this case, no single observation stands out from the figure and thus affects the model too much.
+
+
+
+```{r, echo=FALSE}
+par(mfrow=c(2,2))
+plot(my_model, which=c(1,2,5))
+```
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
