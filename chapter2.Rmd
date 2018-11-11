@@ -4,6 +4,8 @@ author: Susanna Jernberg
 output:
   html_document: default
 ---
+#Linear regression and model validation
+
 ### Overview of the data
 
 The data constitutes of 7 variables that are gender (factor), age (integer), attitude (integer) that describes, attitude toward statistics, deep (numeric) describing exam questions related to deep learning, stra (numeric) describing questions related to strategic learning and surf (numeric) describing questions related to surface learning and Points (integer) that refers to exam points.
