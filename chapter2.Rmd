@@ -10,7 +10,7 @@ output:
 
 The data constitutes of 7 variables that are gender (factor), age (integer), attitude (integer) that describes, attitude toward statistics, deep (numeric) describing exam questions related to deep learning, stra (numeric) describing questions related to strategic learning and surf (numeric) describing questions related to surface learning and Points (integer) that refers to exam points.
 
-```{r,}
+```{r}
 learning_data<-read.csv(file="D:/Users/E1002220/Opinnot/Data science/IODS-project/data/learning2014_data.csv", sep="\t")
 library(dplyr)
 library(GGally)
