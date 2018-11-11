@@ -164,9 +164,18 @@ $(document).ready(function () {
 <div id="learnig-to-use-github-and-r-markdown" class="section level1">
 <h1>Learnig to use GitHub and R Markdown</h1>
 <p><em>Description of this week’s work</em></p>
-<p>This week has been the starting week of the course. I started by creating a Github account and creating my own course page by forking the course page from the instructor. I also downloaded the GitHub desktop and finally managed to clone my web repository to the desktop version. After that, I realized that it is actually quite handy, because you can use RStudio to modify the documnets and then you just need to go the GitHub desktop and first commit the changed and then push them to the web version. You can have a web diary of our work and notes and you can access it with every computer.</p>
-<p>I have used R and RStudio before but the R Markdown document is new to me. R Markdown enables to create reports of your work so that you do not need to copy-paste for example figures to your report but you can embbed the plot code to your document and create the report right away. I guess this is extremly handy if one needs to repeat some reporting often.</p>
-<p>I also did the course “R short and sweet” in the Datacamp. Even though I have bee using R before, I thought it is probably good to go through all the exercises, as there might be some new functions used. And it was definitely useful: I have not been using for example funcion “cut” that cuts the vector into chosen categories, or the function “head” that prints the first six values.</p>
+<p>Read data in</p>
+<pre class="r"><code>str(learning_data)</code></pre>
+<pre><code>## 'data.frame':    166 obs. of  7 variables:
+##  $ gender  : Factor w/ 2 levels &quot;F&quot;,&quot;M&quot;: 1 2 1 2 2 1 2 1 2 1 ...
+##  $ Age     : int  53 55 49 53 49 38 50 37 37 42 ...
+##  $ Attitude: int  37 31 25 35 37 38 35 29 38 21 ...
+##  $ deep    : num  3.58 2.92 3.5 3.5 3.67 ...
+##  $ stra    : num  3.38 2.75 3.62 3.12 3.62 ...
+##  $ surf    : num  2.58 3.17 2.25 2.25 2.83 ...
+##  $ Points  : int  25 12 24 10 22 21 21 31 24 26 ...</code></pre>
+<pre class="r"><code>dim(learning_data)</code></pre>
+<pre><code>## [1] 166   7</code></pre>
 <hr />
 </div>
 
