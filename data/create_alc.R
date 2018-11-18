@@ -1,14 +1,39 @@
-###10.11.2018
+###18.11.2018
 ## Susanna Jernberg
-### This is a linear regression exercise
+### This is a logistic regression exercise
+### data available at: https://archive.ics.uci.edu/ml/machine-learning-databases/00320/ 
 
 ##read data in
-data<-read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
+data.mat<-read.table("student-mat.csv", sep=";", header=TRUE)
+data.por<-read.table("student-por.csv", sep=";", header=TRUE)
 
 
-#check the dimensions, structure and summary of the data
-dim(data)
-str(data)
+#check the dimensions and structure of both datasets
+dim(data.mat)
+str(data.mat)
+
+dim(data.por)
+str(data.por)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 summary(data)
 
 #the data has 183 rows, 60 columns. It is in a format of data frame, with 183 observations and 60 variables 
