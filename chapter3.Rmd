@@ -4,6 +4,7 @@ author: Susanna Jernberg
 output:
   html_document: default
 ---
+#Logistic regression
 
 ### Overview of the data
 
@@ -42,13 +43,7 @@ g3 + geom_bar() +ggtitle("Distribution by activities and sex")
 
 ### Here I have fit the model with chosen variables and show the summary
 ```{r}
-model<-glm(high_use ~ absences + activities + sex + grades, data=alc, family="binomial")
+model<-glm(high_use ~ absences + activities + sex + G3, data=alc, family="binomial")
 summary(model)
 coef(model)
-```
-
-
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 ```
