@@ -3,78 +3,67 @@
 ### This is a logistic regression exercise
 ### data available at: https://archive.ics.uci.edu/ml/machine-learning-databases/00320/ 
 
-##read data in
-data.mat<-read.table("student-mat.csv", sep=";", header=TRUE)
-data.por<-read.table("student-por.csv", sep=";", header=TRUE)
+## set 
+##read data in IODS course as working directory
+data_math<-read.table("student-mat.csv", sep=";", header=TRUE)
+data_por<-read.table("student-por.csv", sep=";", header=TRUE)
 
 
 #check the dimensions and structure of both datasets
-dim(data.mat)
-str(data.mat)
+dim(data_math)
+str(data_math)
 
-dim(data.por)
-str(data.por)
-
-
+dim(data_por)
+str(data_por)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-summary(data)
-
-#the data has 183 rows, 60 columns. It is in a format of data frame, with 183 observations and 60 variables 
-#(59 integer variables and 1 factor variable)
-
-##Create an analysis dataset with the variables gender, age, attitude, deep, stra, surf and points 
-#by combining questions in the data
-
-
-install.packages(dplyr)
 library(dplyr)
-library(GGally)
 
-# questions related to specific topics
-deep_questions<-c("D03","D11", "D19", "D27", "D07", "D14", "D22", "D30", "D06", "D15", "D23", "D31")
-surface_questions <-c("SU02", "SU10", "SU18", "SU26", "SU05", "SU13", "SU21", "SU29", "SU08", "SU16", "SU24", "SU32")
-strategic_questions<-c("ST01", "ST09", "ST17", "ST25", "ST04", "ST12", "ST20", "ST28")
+# Combine the two datasets by using common columns as identifiers
+#first define which columns will be used as identifiers
+join_by <- c("school", "sex", "age", "address", "famsize", "Pstatus",
+             "Medu", "Fedu", "Mjob", "Fjob", "reason", "nursery", "internet")
+join_by
 
-#selecting questions related to topics and creating new columns by averiging
-deep_columns<-select(data, one_of(deep_questions))
-data$deep<-rowMeans(deep_columns)
+# then join the columns based on those identifiers and keep only the students in the both datasets
+math_por<-inner_join(data_math, data_por, by=join_by, suffix= c(".data_math", ".data_por"))
 
-surface_columns<-select(data, one_of(surface_questions))
-data$surf<-rowMeans(surface_columns)
+alc<-select(math_por, one_of(join_by))
 
-strategic_columns<-select(data, one_of(strategic_questions))
-data$stra<-rowMeans(strategic_columns)
+## add the missing columns (ones not used in joining the dataset) to the data frame
 
-#choosing the columns to keep
-keep_columns<-c("gender", "Age", "Attitude", "deep", "stra", "surf", "Points")
+notjoined_columns<-colnames(data_math)[!colnames(data_math) %in% join_by]
 
-#creating new dataset
-learning_data<-select(data, one_of(keep_columns))
-str(analysis_dataset)
+notjoined_columns
 
-#select rows where Points is greater that zero
-learning_data<-subset(analysis_dataset, Points>0)
-str(learning_data)
+for(column_name in notjoined_columns){
+  two_columns<-select(math_por, starts_with(column_name))
+  first_column<-select(two_columns, 1)[[1]]
+  
+  if(is.numeric(first_column)){
+    alc[column_name]<-round(rowMeans(two_columns))
+  } else {
+    alc[column_name]<-two_columns[,1]
+  }
+}
 
-#At the moment, the data includes 166 observations and 7 variables
-#writing a table and reading the data in
-write.table(learning_data, file="D:/Users/E1002220/Opinnot/Data science/IODS-project/data/learning2014_data.csv", sep="\t")
-learning_data<-read.csv(file="D:/Users/E1002220/Opinnot/Data science/IODS-project/data/learning2014_data.csv", sep="\t")
-str(learning_data)
+
+# check structure and dimensions of the new dataset
+dim(alc)
+str(alc)
+
+library(ggplot2)
+
+# now create a new column alc_use to the joined data
+alc<- mutate(alc, alc_use =(Dalc + Walc)/2)
+
+library(tidyr)
+
+# create column high_use which is TRUE for studens for which "alc_use" is greater than 2
+
+alc<-mutate(alc, high_use = alc_use>2)
+
+glimpse(alc)
+
+write.table(alc, "alc_data.csv", sep="\t")
+
