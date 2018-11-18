@@ -1,0 +1,54 @@
+---
+title: Logistic regression
+author: Susanna Jernberg
+output:
+  html_document: default
+---
+
+### Overview of the data
+
+This data is a joined data of studen achievment data in a secondary school. "The data attributes include student grades, demographic, social and school related features) and it was collected by using school reports and questionnairesThe variables not used for joining the two data have been combined by averaging (including the grade variables". I have added column'alc_use' which is the average of 'Dalc' and 'Walc', and the column 'high_use' whcih is TRUE if 'alc_use' is higher than 2 and FALSE otherwise.
+
+```{r}
+alc<-read.csv(file="D:/Users/E1002220/Opinnot/Data science/IODS-project/data/alc_data.csv", sep="\t")
+library(dplyr)
+glimpse(alc)
+```
+
+Based on the summaries above, I have chosen 4 variables to explain the alcohol use: absences, grades, activities and sex. Absences from school might correlate with the alcohol use by increasing it the more there are absences, whereas the etra-curricular actitivities may decrease it because the student has other things to do. The better grades, the less alcohol the student might be drinking because to achieve good grades, one need to study and has not that much time to drink. And sex was chosen because it is known from previous studies, that boys usually consume more alcohol than girls.
+
+Here are bar plots of each variable and summary statistics by group
+```{r}
+library(tidyr)
+library(ggplot2)
+gather(alc) %>%ggplot(aes(value), col=sex)+facet_wrap("key", scales="free")+geom_bar()
+alc%>% group_by(sex, high_use)%>% summarise(count = n(), mean_grade=mean(G3))
+par(mfrow=c(2,2))
+
+g1<-ggplot(alc, aes(x=high_use, y=G3, col=sex))
+g1 + geom_boxplot() + ylab("grade")+ggtitle("Student grades by alcohol consumption and sex")
+g2<-ggplot(alc, aes(x=high_use, y=absences, col=sex))
+g2 + geom_boxplot() + ylab("absences")+ggtitle("Student absences by alcohol consumption and sex")
+g3<-ggplot(alc, aes(x=high_use, y=activities, col=sex))
+g3 + geom_boxplot() + ylab("activities")+ggtitle("Student activities by alcohol consumption and sex")
+
+g1<-ggplot(alc, aes(x=G3, col=sex))
+g1 + geom_bar()
+g2<-ggplot(alc, aes(x=absences, col=sex))
+g2 + geom_bar()
+g3<-ggplot(alc, aes(x=activities, col=sex))
+g3 + geom_bar() +ggtitle("Distribution by activities and sex")
+```
+
+### Here I have fit the model with chosen variables and show the summary
+```{r}
+model<-glm(high_use ~ absences + activities + sex + grades, data=alc, family="binomial")
+summary(model)
+coef(model)
+```
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
