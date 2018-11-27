@@ -47,3 +47,4 @@ model<-glm(high_use ~ absences + activities + sex + G3, data=alc, family="binomi
 summary(model)
 coef(model)
 ```
+testi teksti
