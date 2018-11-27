@@ -6,7 +6,7 @@ output:
 ---
 #Clustering and classification
 
-### Sucture of the data
+###Structure of the data
 
 In this exercise, I have used "Boston" dataset that is available in R package "Mass". It is a data about housing value in suburbs of Boston. Below I present the dimensions and sturcture of the dataset.
 
@@ -19,7 +19,9 @@ dim(Boston)
 str(Boston)
 
 ```
+
 ### Summary and graphical overview of the data
+
 ```{r}
 summary(Boston)
 pairs(Boston)
@@ -30,7 +32,9 @@ cor_matrix<-cor(Boston)
 cor_matrix%>%round(digits=2)
 corrplot(cor_matrix, method="circle", type="upper", cl.bos="b", tl.pos="d", tl.cex=0.6)
 ```
+
 ### Data scaling
+
 For scaling, the column means from the corresponding columns need to be subtraced and their difference is devided with standard deviation.
 ```{r}
 boston_scaled<-scale(Boston)
@@ -53,7 +57,10 @@ table(crime)
 boston_scaled<-dplyr::select(boston_scaled, -crim)
 boston_scaled<-data.frame(boston_scaled, crime)
 ```
+
+
 Next I will divide the data to train and test set
+
 ```{r}
 n<-nrow(boston_scaled)
 ind<-sample(n, size= n*0.8) ##choose randomly 80 % of the rows
@@ -62,7 +69,9 @@ test<-boston_scaled[-ind,]
 correct_classes<-test$crime
 test<-dplyr::select(test, -crime) # remove the crime variable from test data
 ```
-### Fitting the linear discriminant model
+
+###Fitting the linear discriminant model
+
 ```{r}
 lda.fit<-lda(crime~., data=train)
 lda.fit
@@ -77,17 +86,24 @@ classes<-as.numeric(train$crime)
 plot(lda.fit, dimen=2, col=classes, pch=classes)
 lda.arrows(lda.fit, myscale=3)
 ```
+
 ###Prediction from the dataset
-### Fitting the linear discriminant model
+
+###Fitting the linear discriminant model
+
 ```{r}
 lda.pred<-predict(lda.fit, newata=test) #this should continue with r code: table(correct=correct_classes, predicted=lda.pred$class) but for some reason my R doesn't allow to perform this and says only error "all arguments must have the same length"
 ```
-### Distance measures
+
+###Distance measures
+
 ```{r}
 dist_eu<-dist(Boston)
 summary(dist_eu)
 ```
-### K-means clustering
+
+###K-means clustering
+
 ```{r}
 km<-kmeans(Boston, centers=3)
 pairs(Boston[6:10], col=km$cluster)
