@@ -1,0 +1,81 @@
+---
+title: Dimensionality reduction techniques
+author: Susanna Jernberg
+output:
+  html_document: default
+---
+#Dimensionality reduction techniques
+
+###Structure of the data
+
+
+```{r}
+library(tidyverse)
+library(stringr)
+library(dplyr)
+str(human$GNI)
+str_replace(human$GNI, patter=",",replace="") %>% as.numeric # remove the commas from GNI and print out version of it and change it to numeric vector
+```
+
+Here I'm selecting which columns to keep
+```{r}
+keep<-c("Country", "Edu2.FM", "Labo.FM", "Life.Exp", "Edu.Exp", "GNI", "Mat.Mor", "Ado.Birth", "Parli.F")
+human<-select(human, one_of(keep)) #select the "keep" columns
+complete.cases(human) # print out a completeness indicator of the human data
+data.frame(human[-1], comp=complete.cases(human)) # print out the data along with a completeness indicator as the last column
+human_<-filter(human, complete.cases(human)) #filter out all rows with NA values. Right now, TRUE is recycled so that nothing is filtered out.
+```
+Here I have excluded more observations
+
+```{r}
+tail(human, n=10) # look at the last 10 observations of human
+last<-nrow(human)-7 # define the last indice we want to keep
+human_<-human[1:last, ] # choose everything until the last 7 observations
+rownames(human_)<-human_$Country # add countires as rownames
+
+```
+
+
+```{r}
+library(GGally)
+human_<-select(human, -Country) # remove the country variable, the rownames are still by country
+ggpairs(human_)
+cor(human_) %>%corrplot #compute the correlation matrix and draw the plot
+
+```
+
+Next I anaylyze the data using principal component analysis and draw a plot of the results
+```{r}
+human_std<- scale(human) #standardize the variables
+summary(human_std)
+pca_human<-prcomp(human_std) #perform principal component analysis (with the SVD method)
+biplot(pca_human, choices = 1:2, cex=c(0.8,1), col=c("grey40", "deeppink2"))
+```
+
+
+```{r}
+s<-summary(pca_human) # create and print out a summary of pca_human
+s
+pca_pr<-round(100*s$importance[2,], digits=1) # rounded percentages of variance captured by each PC. multiply by hundre in order to get percentages instead of proportions
+pca_pr #print out the percentages of variance
+pc_lab<-paste0(names(pca_pr), " (", pca_pr, "%)") # create object pc_lab to be used as axis labels
+biplot(pca_human, cex=c(0.8,1), col=c("grey40", "deeppink2"), xlab=pc_lab[1], ylab=pc_lab[2])
+```
+
+```{r}
+library(FactoMineR)
+library(tidyr)
+keep_columns<-c("Tea", "How", "how", "sugar", "where", "lunch")
+tea_time<-select(tea, one_of(keep_columns))
+summary(tea_time)
+str(tea_time)
+gather(tea_time)%>%ggplot(aes(value)) + facet_wrap("key", scales="free")+geom_bar()+theme(axis.text.x=element_text(angle=45,hjust=1,size=8))
+```
+
+###Multiple correspondence analysis
+```{r}
+mca<-MCA(tea_time, graph=FALSE)
+summary(mca)
+plot(mca, habillage="quali") # by adding invisible= "var" or "ind", you can choose if individuals or the variables are not shown
+
+```
